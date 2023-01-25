@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Bienvenue !
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{# {{ encore_entry_link_tags('app') }} #}
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+		{% endblock %}
+
+		{% block javascripts %}
+			{# {{ encore_entry_script_tags('app') }} #}
+			<script src="{{ asset('js/cursor.js') }}"></script>
+		{% endblock %}
+	</head>
+	<body>
+		<div class="modifiers">
+			<div class="cursor"></div>
+		</div>
+		<nav>
+			<a href="{{path('sujets')}}" class="app-title" href="#">FORUM</a>
+			<div>
+				<ul>
+					<li>
+						<a href="{{ path('app_home') }}">Accueil</a>
+					</li>
+					{% if app.user %}
+						<li>
+							<a href="{{ path('app_logout') }}">Deconnexion</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{{ path('app_register') }}">Créer un compte</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">Connexion</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+			{% if app.user %}
+				<h4>Bienvenue {{ app.user }}</h4>
+			{% endif %}
+		</nav>
+		<div id="wrapper"> {% block body %}{% endblock %}
+			</div>
+		</body>
+	</html>

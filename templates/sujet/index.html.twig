@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des sujets
+{% endblock %}
+
+{% block body %}
+	<div class="content-wrap">
+		<div class="btn-add">
+			<a href="{{ path('sujet_add') }}">&#x2b; Nouveau sujet
+			</a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Sujet</th>
+					<th>Date de création</th>
+					<th>Auteur</th>
+					<th class="txt-ctr">Messages</th>
+					<th class="txt-ctr">Statut</th>
+					<th class="txt-ctr">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for sujet in sujets %}
+					<tr>
+						<td>
+							<div>
+								<a href="{{ path('sujet_show', {'id':sujet.id}) }}">{{ sujet.titre }}</a>
+							</div>
+						</td>
+						<td>
+							<div>{{ sujet.dateCreation | date("m/d/Y H:i") }}</div>
+						</td>
+						<td>
+						{% if sujet.user %}
+							<div>{{ sujet.user }}</div>
+						{% else %}
+							<div>[utilisateur supprimé]</div>
+						{% endif %}
+						</td>
+						<td class="txt-ctr">{{ sujet.messages | length }}</td>
+						<td class="txt-ctr">
+							{% if sujet.verrouille %}
+								<i class="fas fa-lock"></i>
+							{% else %}
+								<i class="fas fa-lock-open"></i>
+							{% endif %}
+						</td>
+						<td
+							class="txt-ctr">
+							{% if sujet.verrouille %}
+								<a class="lock" href="{{ path('sujet_verrouille', {'id':sujet.id}) }}">
+									<i class="fas fa-unlock"></i>
+								</a>
+							{% else %}
+								<a class="lock" href="{{ path('sujet_verrouille', {'id':sujet.id}) }}">
+									<i class="fas fa-user-lock"></i>
+								</a>
+							{% endif %}
+							<a href="{{ path('sujet_edit', {'id':sujet.id}) }}">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('sujet_delete', {'id':sujet.id}) }}">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
