@@ -6,8 +6,10 @@
 
 {% block body %}
 	<div>
-		<h1>Message:</h1>
+		<h1>Message Décoré:</h1>
 		<div>{{ decoratedMessage | raw }}</div>
+		<h1>Message Formatté:</h1>
+		<div>{{ formattedMessage | raw }}</div>
 		<a href="{{ path('sujet_show', {'id': message.sujet.id}) }}">
 			&#60; Retour au sujet {{ message.sujet.titre }}
 		</a>

@@ -6,9 +6,10 @@ use App\Entity\Sujet;
 use App\Entity\Message;
 use App\Form\MessageFormType;
 use App\Service\LoggerService;
-use AuthorDateMessageDecorator;
-use BoldMessageDecorator;
+use App\Service\MessageFormatterService;
+use App\Strategy\HtmlFormatter;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Decorator\AuthorDateMessageDecorator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class MessageController extends AbstractController
 {
+
+    // ! REFERENCE REPONSE TEST TECHNIQUE - 16:
+    private $formatter;
+
+    public function __construct(HtmlFormatter $formatter) {
+        $this->formatter = $formatter;
+    }
+    //
+    
+
     #[Route('/message', name: 'app_message')]
     public function index(): Response
     {
@@ -26,16 +37,24 @@ class MessageController extends AbstractController
         ]);
     }
 
-    // ! REFERENCE REPONSE TEST TECHNIQUE - 15:
+    // ! REFERENCE REPONSE TEST TECHNIQUE - 15, 16:
     #[Route('/message/{id}', name: 'message_show')]
     public function showMessage(Request $request, Message $message, ManagerRegistry $doctrine)
     {
-
+        
+        //! 15 - Decorator
         // $decorator = new BoldMessageDecorator($message);
         $decorator = new AuthorDateMessageDecorator($message);
+        $decoratedMessage = $decorator->decorate();
+
+        // //! 16 - Strategy
+        // $formattedMessage = $this->formatter->format($message);
+        $formattedMessage = $this->formatter->format($message);
+
 
         return $this->render('message/show.html.twig', [
-            'decoratedMessage' => $decorator->decorate(),
+            'decoratedMessage' => $decoratedMessage,
+            'formattedMessage' => $formattedMessage,
             'message' => $message,
         ]);
     }

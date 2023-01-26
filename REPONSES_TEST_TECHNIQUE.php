@@ -1,13 +1,9 @@
 <?php
 
-// TODO: Implémentation d'exemple pour les notions suivantes :
-// - Definir des Service Tags custom 
-// - Créer un Compiler Pass
-// - Design pattern Strategy
-
 // Remarques: 
 // - La base de ce projet a été utilisé à des fins de formation. Les nommages devraient être en anglais.
 // - Les classes sont renseignées dans ce document pour y accéder plus rapidement.
+// - L'arborescence n'est peut-être pas optimale elle reprend vaguement la progression par étape au fil des questions.
 
 /*
 
@@ -35,6 +31,9 @@ Service: En injectant le composant de sécurité:
 `public function index(Security) $security) { $user = $security->getUser();}`
 EXEMPLE : 
 */use App\Service\LoggerService;/*
+/practice_symfony-test/config/services.yaml
+
+(Un service Logger a été créé pour en pratiquer l'exemple)
 
 
 6 - Qu'est ce que le "service container" ? A quoi sert-il ?
@@ -75,6 +74,8 @@ https://symfony.com/doc/current/service_container/autowiring.html
 
 Un tag de service permet de dire à Symfony qu'un service doit être enregistré d'une manière différente d'un service normal. Par exmple, le tag "twig.extention" permet de dire à Symfony qu'un service est une extension Twig utilisable directement depuis les vues.
 
+Exemple dans la question 17.
+
 https://symfony.com/doc/current/service_container/tags.html
 https://symfony.com/doc/current/reference/dic_tags.html
 
@@ -103,13 +104,20 @@ Une méthode magique est une méthode qui, si elle est présente dans la classe,
 
 15 - En quoi consiste le design pattern "Decorator" ? Illustrez vos propos...
 
+Design pattern Structurel.
+
 Le design pattern "Decorator" permet d'ajouter des fonctionnalités nouvelles à une classe de façon dynamique sans impacter les classes qui l'utilisent ou en héritent.
 
+Il conserve l'interface de l'objet original et l'étend progressivement à l'ajout de décorateurs.
+L'ajout d'objets étend les fonctionnalités.
+
+-> Ajouter des fonctionnalités à un objet existant.
+
 Exemple:
-*/use App\Controller\MessageDecoratorInterface;/*
-*/use App\Controller\MessageDecorator;/*
-*/use App\Controller\BoldMessageDecorator;/*
-*/use App\Controller\AuthorDateMessageDecorator;/*
+*/use App\Decorator\MessageDecoratorInterface;/*
+*/use App\Decorator\MessageDecorator;/*
+*/use App\Decorator\BoldMessageDecorator;/*
+*/use App\Decorator\AuthorDateMessageDecorator;/*
 */use App\Controller\MessageController;/*
 Methode showMessage ligne 29
 
@@ -117,18 +125,39 @@ Methode showMessage ligne 29
 https://refactoring.guru/design-patterns/decorator
 
 
-// TODO
 16 - En quoi consiste le design patter "Strategy" ? illustrez vos propos...
 
-Le design pattern "Strategy" est un patron de conception de type comportemental grâce auquel des algorithmes peuvent être sélectrionnées à la volée au cours du temps d'exécution selon certaines conditions.
+Le design pattern "Strategy" est un patron de conception de type comportemental grâce auquel des algorithmes peuvent être sélectionnées à la volée au cours du temps d'exécution selon certaines conditions.
+
+Change facilement de comportement en choissant une "stratégie" différente sans avoir à changer la structure de l'objet.
+
+-> Choisir entre différents comportements ou algorithmes pour un objet existant.
+
+Exemple:
+*/use App\Strategy\MessageFormatterInterface;/*
+*/use App\Strategy\HtmlFormatter;/*
+*/use App\Strategy\PlainTextFormatter;/*
+*/use App\Controller\MessageController;/*
+Constructeur et Methode showMessage ligne 29
 
 https://refactoring.guru/design-patterns/strategy
 
 
-// TODO
 17 - Qu'est-ce qu'un CompilerPass ?
 
 Un CompilerPass est un objet, une classe qui impplémente le CompilerPassInterface du composant DependancyInjection de Symfony et qui permet d'ajouter une passe de compilation du container de service. Il peut, par exemple, être utilisé pour mettre en place le design pattern "Strategy".
+
+-> Personnaliser les services de Symfony. Entendre ou remplacer, ajouter des comportements supplémentaires aux services existants.
+
+Exemple:
+*/use App\DependencyInjection\MessageFormatterCompilerPass;/*
+*/use App\Service\MessageFormatterService;/*
+/practice_symfony-test/config/services.yaml
+(Cet exemple est très simplifié, avec une seul "stratégie" de formattage, et non utilisé dans un controlleur)
+
+La classe MessageFormatterCompilerPass configure des services de formatage de message en utilisant le pattern Stategy.
+Elle s'execute lorsque les services sont compilés (en étendant la classe CompilerPassInterface). 
+La méthode "process" trouve les services tagués recherchés puis les ajoute à un service existant qui gère les différentes stratégies de formatage de message.
 
 
 13 & 18 - Qu'est ce qu'un trait ?
@@ -147,7 +176,7 @@ Dans un second temps, on peut utiliser le design pattern "Adapter" et créer un 
 
 Dans un troisième temps, on intégre l'utilisation de cet Adapter dans les Controllers.
 
-// TODO - Demander vérification
+// TODO - Demander vérification utilisation Adapter
 
 */use App\Entity\User;
 use App\Entity\Traits\EntityTimeTrait;
@@ -158,6 +187,7 @@ use App\Controller\RegistrationController;
 
 https://refactoring.guru/design-patterns/adapter
 
+L'Adapter permet d'adapter l'interface d'un objet existant à une interface attendue pour en permettre l'interaction autrement incompatible. 
 _________________________________________
 
 Notes: 
@@ -168,4 +198,4 @@ https://symfony.com/doc/current/components/dependency_injection/workflow.html
 Questions:
 
 18: Y a t'il des cas où les traits entravent l'utilisation de doctrine pour les migrations et la mise à jour des schémas ?
-14: Est repris dans la question 18 ? Termes et vocab à discuter.
+14: 14 est repris dans la question 18 ? Termes et vocab à discuter.

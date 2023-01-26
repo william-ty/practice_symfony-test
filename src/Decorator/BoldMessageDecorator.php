@@ -2,6 +2,8 @@
 
 // ! REFERENCE REPONSE TEST TECHNIQUE - 15:
 
+namespace App\Decorator;
+
 use App\Decorator\MessageDecorator;
 
 class BoldMessageDecorator extends MessageDecorator

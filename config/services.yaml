@@ -1,5 +1,8 @@
 # !Les commentaires commencant par '!' sont ajoutés dans un but de formation.
 
+# ! REFERENCE REPONSE TEST TECHNIQUE - 4, 6:
+
+
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -29,6 +32,13 @@ services:
         # !If you're using the default services.yaml configuration, Symfony will automatically pass the security.helper to your service thanks to autowiring and the Security type-hint.
         # !Si la configuration par default est désactivée:
         # !arguments: ['@logger', '@security.helper']
+    # App\Service\MessageFormatterService: ~
+
+    # ! REFERENCE REPONSE TEST TECHNIQUE - 17:
+    App\DependencyInjection\MessageFormatterCompilerPass:
+        tags: ['compiler_pass']
+    App\Service\MessageFormatterService: 
+        tags: ['message_formatter']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
