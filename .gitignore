@@ -1,7 +1,7 @@
 
 ###> symfony/framework-bundle ###
 COMMANDS.md
-REPONSES_TEST_TECHNIQUE.md
+REPONSES_TEST_TECHNIQUE_INITIAL.md
 /.env
 /.env.local
 /.env.local.php

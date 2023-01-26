@@ -1,17 +1,16 @@
-<?php
 ### Reponses Test Technique
 
-// Remarques: 
-// - La base de ce projet a été utilisé à des fins de formation. Les nommages devraient être en anglais.
-// - Les classes sont renseignées dans ce document pour y accéder plus rapidement.
-// - L'arborescence n'est peut-être pas optimale elle reprend vaguement la progression par étape au fil des questions.
-// - Seules les questions pouvant bénéficier d'un exemple sont présentes.
-/*
+Remarques: 
+- La base de ce projet a été utilisé à des fins de formation. Les nommages devraient être en anglais.
+- Les classes sont renseignées dans ce document pour y accéder plus rapidement.
+- L'arborescence n'est peut-être pas optimale elle reprend vaguement la progression par étape au fil des questions.
+- Seules les questions pouvant bénéficier d'un exemple sont présentes.
+
 
 2 - Quelles sont les informations qui caractérisent une route ?
 
 Exemple : 
-*/use App\Controller\MessageController;/*
+use App\Controller\MessageController;
 Méthode edtiMessage() ligne 27
 
 Une route est caractérisée par :
@@ -31,7 +30,7 @@ VueTWIG: Variable globale 'app': `app.user`
 Service: En injectant le composant de sécurité:
 `public function index(Security) $security) { $user = $security->getUser();}`
 Exemple : 
-*/use App\Service\LoggerService;/*
+use App\Service\LoggerService;
 /practice_symfony-test/config/services.yaml
 
 (Un service Logger a été créé pour en pratiquer l'exemple)
@@ -50,7 +49,7 @@ Il construit des instances d'objets à partir des classes qu'il connait.
 Exemple: Passer le ManagerRegistery en paramètre à la méthode d'un contrôleur est automatiquement detecté par le container de service qui reconnait que cet objet est necessité.
 
 Pour afficher les services disponibles :
-php bin/console debug:autowiring --all
+`php bin/console debug:autowiring --all`
 
 Usuellement, trois sources de services sont mise à l'intérieur du container de services:
 - /src
@@ -88,7 +87,7 @@ Un ParamConverter permet de transformer automatiquement un paramètre de route e
 -> Ainsi un {id} passé dans la définition d'une route par annotation sera passé en objet dans la méthode concernée s'il est passé en argument.
 
 Exemple : 
-*/use App\Controller\SujetController;/*
+use App\Controller\SujetController;
 Méthode addEditSujet() ligne 31
 
 https://symfony.com/bundles/SensioFrameworkExtraBundle/current/annotations/converters.html
@@ -114,11 +113,11 @@ L'ajout d'objets étend les fonctionnalités.
 -> Ajouter des fonctionnalités à un objet existant.
 
 Exemple:
-*/use App\Decorator\MessageDecoratorInterface;/*
-*/use App\Decorator\MessageDecorator;/*
-*/use App\Decorator\BoldMessageDecorator;/*
-*/use App\Decorator\AuthorDateMessageDecorator;/*
-*/use App\Controller\MessageController;/*
+use App\Decorator\MessageDecoratorInterface;
+use App\Decorator\MessageDecorator;
+use App\Decorator\BoldMessageDecorator;
+use App\Decorator\AuthorDateMessageDecorator;
+use App\Controller\MessageController;
 Methode showMessage ligne 29
 
 
@@ -134,10 +133,10 @@ Change facilement de comportement en choissant une "stratégie" différente sans
 -> Choisir entre différents comportements ou algorithmes pour un objet existant.
 
 Exemple:
-*/use App\Strategy\MessageFormatterInterface;/*
-*/use App\Strategy\HtmlFormatter;/*
-*/use App\Strategy\PlainTextFormatter;/*
-*/use App\Controller\MessageController;/*
+use App\Strategy\MessageFormatterInterface;
+use App\Strategy\HtmlFormatter;
+use App\Strategy\PlainTextFormatter;
+use App\Controller\MessageController;
 Constructeur et Methode showMessage ligne 29
 
 https://refactoring.guru/design-patterns/strategy
@@ -150,8 +149,8 @@ Un CompilerPass est un objet, une classe qui impplémente le CompilerPassInterfa
 -> Personnaliser les services de Symfony. Entendre ou remplacer, ajouter des comportements supplémentaires aux services existants.
 
 Exemple:
-*/use App\DependencyInjection\MessageFormatterCompilerPass;/*
-*/use App\Service\MessageFormatterService;/*
+use App\DependencyInjection\MessageFormatterCompilerPass;
+use App\Service\MessageFormatterService;
 /practice_symfony-test/config/services.yaml
 (Cet exemple est très simplifié, avec une seul "stratégie" de formattage, et non utilisé dans un controlleur)
 
@@ -176,14 +175,14 @@ Dans un second temps, on peut utiliser le design pattern "Adapter" et créer un 
 
 Dans un troisième temps, on intégre l'utilisation de cet Adapter dans les Controllers.
 
-// TODO - Demander vérification utilisation Adapter
+TODO - Demander vérification utilisation Adapter
 
-*/use App\Entity\User;
+use App\Entity\User;
 use App\Entity\Traits\EntityTimeTrait;
 use App\Adapter\EntityRepositoryInterface;
 use App\Adapter\EntityRepositoryAdapter;
 use App\Controller\RegistrationController;
-/*
+
 
 https://refactoring.guru/design-patterns/adapter
 
