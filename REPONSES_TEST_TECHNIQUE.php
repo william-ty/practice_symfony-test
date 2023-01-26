@@ -3,6 +3,8 @@
 // TODO: Implémentation d'exemple pour les notions suivantes :
 // - Definir des Service Tags custom 
 // - Créer un Compiler Pass
+// - Design pattern Decorator
+// - Design pattern Strategy
 
 // Remarques: 
 // - La base de ce projet a été utilisé à des fins de formation. Les nommages devraient être en anglais.
@@ -100,69 +102,23 @@ Une méthode magique est une méthode qui, si elle est présente dans la classe,
 -> De même que la méthode __toString() est appelée à lorsque qu'un objet est affiché en chaine de caractères.
 
 
-14 - La classe suivante est techniquement correcte :
-
-```php
-class Logger 
-{
-  public function log($message) 
-  {
-    $formatter = new JSONFormatter();
-    $log = $formatter->format($message);
-    $this->writeLog($log);
-  }
-}
-```
-Quels sont les problèmes qu'elle soulève ?
-Cette classe n'est pas flexible car elle impose un type de formatage en JSON sans possibilité d'en changer. De plus, elle injecte une dépendance à la classe JSONFormatter qui rendrait difficile son test unitaire.
-
-Proposer une solution simple...
-
-```php
-namespace App\Logger;
-class Logger
-{
-  private $formatter;
-
-  public function __construct(FormatterInterface $formater)
-  {
-    $this->formatter = $formatter;
-  }
-
-  public function log(string $message)
- {
-  $log = $this->formatter->format($message);
-  $this->writeLog($log);
- }
-}
-
-class JsonFormatter implements FormatterInterface
-{
-  public function format(string $message) 
-  {
-    return json_encode(['log' => $message]);
-  }
-}
-
-interface FormatterInterface
-{
-  public function format(string $message);
-} 
-```
-
-
+// TODO
 15 - En quoi consiste le design pattern "Decorator" ? Illustrez vos propos...
 
 Le design pattern "Decorator" permet d'ajouter des fonctionnalités nouvelles à une classe de façon dynamique sans impacter les classes qui l'utilisent ou en héritent.
-(voir schéma "Decorator")
+
+https://refactoring.guru/design-patterns/decorator
 
 
+// TODO
 16 - En quoi consiste le design patter "Strategy" ? illustrez vos propos...
 
 Le design pattern "Strategy" est un patron de conception de type comportemental grâce auquel des algorithmes peuvent être sélectrionnées à la volée au cours du temps d'exécution selon certaines conditions.
-(voir schéma "Strategy")
+
+https://refactoring.guru/design-patterns/strategy
 
 
+// TODO
 17 - Qu'est-ce qu'un CompilerPass ?
 
 Un CompilerPass est un objet, une classe qui impplémente le CompilerPassInterface du composant DependancyInjection de Symfony et qui permet d'ajouter une passe de compilation du container de service. Il peut, par exemple, être utilisé pour mettre en place le design pattern "Strategy".
@@ -184,8 +140,14 @@ Dans un second temps, on peut utiliser le design pattern "Adapter" et créer un 
 
 Dans un troisième temps, on intégre l'utilisation de cet Adapter dans les Controllers.
 
+*/use App\Entity\User;
+use App\Entity\Traits\EntityTimeTrait;
+use App\Adapter\EntityRepositoryInterface;
+use App\Adapter\EntityRepositoryAdapter;
+use App\Controller\RegistrationController;
+/*
 
-
+https://refactoring.guru/design-patterns/adapter
 
 _________________________________________
 
@@ -197,3 +159,4 @@ https://symfony.com/doc/current/components/dependency_injection/workflow.html
 Questions:
 
 18: Y a t'il des cas où les traits entravent l'utilisation de doctrine pour les migrations et la mise à jour des schémas ?
+14: Est repris dans la question 18 ? Termes et vocab à discuter.

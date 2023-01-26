@@ -18,9 +18,6 @@ class EntityRepositoryAdapter implements EntityRepositoryInterface
 
   public function save($entity)
   {
-    // $now = new \DateTime();
-    // $entity->setDateCreation($now);
-    // dd($entity);
     $this->doctrine->persist($entity);
     $this->doctrine->flush();
   }
