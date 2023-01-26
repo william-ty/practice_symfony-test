@@ -40,7 +40,7 @@
 					{% for message in sujet.messages %}
 						<tr>
 							<td>
-								<div>{{ message.texte }}</div>
+								<a href="{{ path('message_show', {'id': message.id}) }}">{{ message.texte }}</a>
 							</td>
 							<td>
 								<div>{{ message.user }}</div>

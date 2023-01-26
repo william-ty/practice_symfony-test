@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	<h1>Detail message</h1>
+{% endblock %}
+
+{% block body %}
+	<div>
+		<h1>Message:</h1>
+		<div>{{ decoratedMessage | raw }}</div>
+		<a href="{{ path('sujet_show', {'id': message.sujet.id}) }}">
+			&#60; Retour au sujet {{ message.sujet.titre }}
+		</a>
+	</div>
+
+{% endblock %}

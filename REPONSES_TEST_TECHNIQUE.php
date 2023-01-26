@@ -3,7 +3,6 @@
 // TODO: Implémentation d'exemple pour les notions suivantes :
 // - Definir des Service Tags custom 
 // - Créer un Compiler Pass
-// - Design pattern Decorator
 // - Design pattern Strategy
 
 // Remarques: 
@@ -102,10 +101,18 @@ Une méthode magique est une méthode qui, si elle est présente dans la classe,
 -> De même que la méthode __toString() est appelée à lorsque qu'un objet est affiché en chaine de caractères.
 
 
-// TODO
 15 - En quoi consiste le design pattern "Decorator" ? Illustrez vos propos...
 
 Le design pattern "Decorator" permet d'ajouter des fonctionnalités nouvelles à une classe de façon dynamique sans impacter les classes qui l'utilisent ou en héritent.
+
+Exemple:
+*/use App\Controller\MessageDecoratorInterface;/*
+*/use App\Controller\MessageDecorator;/*
+*/use App\Controller\BoldMessageDecorator;/*
+*/use App\Controller\AuthorDateMessageDecorator;/*
+*/use App\Controller\MessageController;/*
+Methode showMessage ligne 29
+
 
 https://refactoring.guru/design-patterns/decorator
 
@@ -139,6 +146,8 @@ Dans un premier temps, il faut créer un EntityTimeTrait contenant les propriét
 Dans un second temps, on peut utiliser le design pattern "Adapter" et créer un EntityRepositoryAdapter (implémentant une interface EntityRepositoryInterface) contenant les méthodes "save" et "update", méthodes qui utiliseront l'EntityManager de Doctrine (ou plutôt son interface) pour persister/flusher les entités apèrs avoir setter les propriétés "createdAt" et "updatedAt".
 
 Dans un troisième temps, on intégre l'utilisation de cet Adapter dans les Controllers.
+
+// TODO - Demander vérification
 
 */use App\Entity\User;
 use App\Entity\Traits\EntityTimeTrait;

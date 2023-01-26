@@ -6,6 +6,8 @@ use App\Entity\Sujet;
 use App\Entity\Message;
 use App\Form\MessageFormType;
 use App\Service\LoggerService;
+use AuthorDateMessageDecorator;
+use BoldMessageDecorator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +23,20 @@ class MessageController extends AbstractController
     {
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
+        ]);
+    }
+
+    // ! REFERENCE REPONSE TEST TECHNIQUE - 15:
+    #[Route('/message/{id}', name: 'message_show')]
+    public function showMessage(Request $request, Message $message, ManagerRegistry $doctrine)
+    {
+
+        // $decorator = new BoldMessageDecorator($message);
+        $decorator = new AuthorDateMessageDecorator($message);
+
+        return $this->render('message/show.html.twig', [
+            'decoratedMessage' => $decorator->decorate(),
+            'message' => $message,
         ]);
     }
 
